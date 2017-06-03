@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatis.User">
+    <insert id="insertUser" >
+        INSERT INTO tb_user(ID,USERNAME,AGE,MOBILE)VALUES (#{id},#{userName},#{age},#{mobilePhone})
+    </insert>
+
+    <select id="queryById" parameterType="int" resultType="java.util.Map">
+        SELECT * FROM tb_user WHERE ID=#{id}
+    </select>
+
+    <update id="updateUser">
+        UPDATE tb_user SET USERNAME=#{userName},AGE=#{age},MOBILE=#{mobilePhone} WHERE ID=#{id}
+    </update>
+
+    <!-- 删除用户(Remove) -->
+         <delete id="deleteUser" parameterType="int">
+             delete from tb_user where id=#{id}
+         </delete>
+
+    <!-- 查询全部用户-->
+         <select id="getAllUsers" resultMap="UserResultMap">
+             select * from tb_user
+         </select>
+    <!-- 使用resultMap映射实体类和字段之间的一一对应关系 -->
+    <!--使用映射可以解决表中字段与实体类字段不一致问题-->
+    <resultMap type="com.xdc.mybatis.bean.User" id="UserResultMap">
+        <id property="id" column="id"/>
+        <result property="userName" column="userName"/>
+        <result property="age" column="age"/>
+        <result property="mobilePhone" column="mobile"/>
+    </resultMap>
+
+    <!-- 查询全部用户-->
+    <!-- 不能直接返回List？可以返回map？List只能通过bean返回
+    <select id="getUsersList" resultMap="java.util.List">
+        select * from tb_user
+    </select>
+    -->
+
+    <!-- 下面是一对一关系-->
+    <!--
+         根据班级id查询班级信息(带老师的信息)
+         ##1. 联表查询
+         SELECT * FROM class c,teacher t WHERE c.teacher_id=t.t_id AND c.c_id=1;
+      -->
+    <!--使用嵌套结果映射来处理重复的联合结果的子集
+                  封装联表查询的数据(去除重复的数据)
+             select * from class c, teacher t where c.teacher_id=t.id and c.id=1
+    -->
+         <select id="getTeacherClass" parameterType="int" resultMap="ClassResultMap">
+             select c.id cid,t.id tid,name,t_name from class c, teacher t where c.teacher_id=t.id and c.id=#{id}
+         </select>
+         <!-- 使用resultMap映射实体类和字段之间的一一对应关系 -->
+         <resultMap type="com.xdc.mybatis.bean.Classes" id="ClassResultMap">
+             <id property="id" column="cid"/>
+             <result property="name" column="name"/>
+             <association property="teacher" javaType="com.xdc.mybatis.bean.Teacher">
+                 <id property="id" column="tid"/>
+                 <result property="name" column="t_name"/>
+             </association>
+         </resultMap>
+
+
+    <!--
+         根据classId查询对应的班级信息,包括学生,老师  三表联合查询
+      -->
+    <!--
+        使用嵌套结果映射来处理重复的联合结果的子集
+        SELECT * FROM class c, teacher t,student s WHERE c.teacher_id=t.t_id AND c.C_id=s.class_id AND  c.c_id=1
+    -->
+
+    <select id="getStudentTeacherClass" parameterType="int" resultMap="ClassResultMap3">
+             select c.id cid,t.id tid,s.id sid,c.name,t_name,s_name from class c, teacher t,student s where c.teacher_id=t.id and c.id=s.class_id and  c.id=#{id}
+    </select>
+    <resultMap type="com.xdc.mybatis.bean.Classes" id="ClassResultMap3">
+        <id property="id" column="cid"/>
+        <result property="name" column="name"/>
+        <association property="teacher" column="teacher_id" javaType="com.xdc.mybatis.bean.Teacher">
+            <id property="id" column="tid"/>
+            <result property="name" column="t_name"/>
+        </association>
+        <!-- ofType指定students集合中的对象类型 -->
+        <collection property="students" ofType="com.xdc.mybatis.bean.Student">
+            <id property="id" column="sid"/>
+            <result property="name" column="s_name"/>
+        </collection>
+    </resultMap>
+
+
+</mapper>

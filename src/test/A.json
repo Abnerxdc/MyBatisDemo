@@ -1,0 +1,34 @@
+[
+  {
+    "t.id": 1,
+    "s.id": 1,
+    "t.name": "teacher2",
+    "c.id": 1,
+    "c.name": "class_a",
+    "s.name": "student_A"
+  },
+  {
+    "t.id": 1,
+    "s.id": 2,
+    "t.name": "teacher2",
+    "c.id": 1,
+    "c.name": "class_a",
+    "s.name": "student_B"
+  },
+  {
+    "t.id": 1,
+    "s.id": 3,
+    "t.name": "teacher2",
+    "c.id": 1,
+    "c.name": "class_a",
+    "s.name": "student_B"
+  },
+  {
+    "t.id": 1,
+    "s.id": 4,
+    "t.name": "teacher2",
+    "c.id": 1,
+    "c.name": "class_a",
+    "s.name": "student_C"
+  }
+]

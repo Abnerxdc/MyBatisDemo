@@ -1,4 +1,3 @@
-import com.alibaba.fastjson.JSONArray;
 import com.xdc.mybatis.bean.Classes;
 import com.xdc.mybatis.bean.User;
 import com.xdc.mybatis.dao.GetSqlSessionFactory;
@@ -45,7 +44,6 @@ public class UserTest {
             Map user = sqlSession.selectOne("queryById",id);
             logger.debug("logUser:"+user);
             sqlSession.commit();
-            //System.out.println(user.getUserName());
         }catch (Exception e){
             e.printStackTrace();
         }finally {
@@ -62,7 +60,6 @@ public class UserTest {
             List user = sqlSession.selectList("getAllUsers");
             logger.debug("logUser:"+user);
             sqlSession.commit();
-            //System.out.println(user.getUserName());
         }catch (Exception e){
             e.printStackTrace();
         }finally {
@@ -71,22 +68,6 @@ public class UserTest {
 
     }
 
-//    @Test
-//    public void getListById(){
-//        sqlSession = GetSqlSessionFactory.getSqlSession();
-//        logger.debug("logSqlSession:"+sqlSession);
-//        try{
-//            List user = sqlSession.selectList("getUsersList");
-//            logger.debug("logUser:"+user);
-//            sqlSession.commit();
-//            //System.out.println(user.getUserName());
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }finally {
-//            GetSqlSessionFactory.closeSession(sqlSession);
-//        }
-//
-//    }
 
     @Test
     public void getTeacherClass(){
@@ -114,7 +95,6 @@ public class UserTest {
         try{
             Classes studentTeacherClass = sqlSession.selectOne("getStudentTeacherClass",id);
             sqlSession.commit();
-            //logger.debug("logUser:"+studentTeacherClass);
             logger.debug("logUser:"+studentTeacherClass.toJSONArray());
         }catch (Exception e){
             e.printStackTrace();
@@ -123,6 +103,5 @@ public class UserTest {
         }
 
     }
-
 
 }

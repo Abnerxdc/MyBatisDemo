@@ -8,6 +8,7 @@ public class Student {
     //定义属性，和student表中的字段对应
     private int id;            //id===>s_id
     private String name;    //name===>s_name
+    private int class_id;
 
     public int getId() {
         return id;
@@ -24,7 +25,13 @@ public class Student {
     public void setName(String name) {
         this.name = name;
     }
+    public int getClass_id() {
+        return class_id;
+    }
 
+    public void setClass_id(int class_id) {
+        this.class_id = class_id;
+    }
     @Override
     public String toString() {
         return "Student [id=" + id + ", name=" + name + "]";

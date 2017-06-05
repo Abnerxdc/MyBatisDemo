@@ -86,6 +86,26 @@
             <result property="name" column="s_name"/>
         </collection>
     </resultMap>
+    
+    
+    
+<!--对于想对复杂的查询操作  不使用javaBean 进行复杂联合查询  主要使用resultMap-->
+
+    <!--先来个两个表连接查询-->
+    <!--<select id="getStudentClass" parameterType="int" resultMap="studentClassMap">-->
+        <!--select s.id sid,c.id cid,c.name cname,c.teacher_id,s.s_name sname s.class_id  from student s, class c where s.class_id=c.id and c.id=#{id}-->
+    <!--</select>-->
+    <!--<resultMap id="studentClassMap" type="studentClass">-->
+        <!--<id property="id" column="cid"></id>-->
+        <!--<result property="cname" column="cname"></result>-->
+        <!--<result property="teacher_id" column="teacher_id"></result>-->
+        <!--<association property="class_id" column="cid" resultMap="studentResult" javaType="Student"></association>-->
+    <!--</resultMap>-->
+    <!--<resultMap id="studentResult" type="Student">-->
+        <!--<id property="sid" column="sid"></id>-->
+        <!--<result property="sname" column="sname"></result>-->
+        <!--<result property="class_id" column="class_id"></result>-->
+    <!--</resultMap>-->
 
 
 </mapper>
